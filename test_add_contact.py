@@ -8,10 +8,13 @@ class UntitledTestCase(unittest.TestCase):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
-    def open_home_page(self, wd):
+    def open_home_page(self):
+        wd = self.wd
         wd.get("http://localhost/addressbook/")
 
-    def login(self, wd, username, password):
+    def login(self, username, password):
+        wd = self.wd
+        self.open_home_page()
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
@@ -19,10 +22,13 @@ class UntitledTestCase(unittest.TestCase):
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
-    def open_contact_page(self, wd):
+    def open_contact_page(self):
+        wd = self.wd
         wd.find_element_by_link_text("add new").click()
 
-    def create_new_contact(self, wd, contact):
+    def create_new_contact(self, contact):
+        wd = self.wd
+        self.open_contact_page()
         # fill contact form
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -49,36 +55,31 @@ class UntitledTestCase(unittest.TestCase):
         # submit contact creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
 
-    def logout(self, wd):
+    def logout(self):
+        wd = self.wd
         wd.find_element_by_link_text("Logout").click()
     
     def test_add_contact(self):
-        wd = self.wd
-        self.open_home_page(wd)
-        self.login(wd, username="admin", password="secret")
-        self.open_contact_page(wd)
-        self.create_new_contact(wd, Contact(first_name='Roman',
+        self.login(username="admin", password="secret")
+        self.create_new_contact(Contact(first_name='Roman',
                                             last_name='Yatsenko',
                                             company='ModulKassa',
                                             address='Russia, Novosibirsk, Planetnaya st., 30',
                                             mobile_phone='+79529316917',
                                             email='test@test.ru',
                                             notes='This is just a text for test of notes.'))
-        self.logout(wd)
+        self.logout()
 
     def test_add_empty_contact(self):
-        wd = self.wd
-        self.open_home_page(wd)
-        self.login(wd, username="admin", password="secret")
-        self.open_contact_page(wd)
-        self.create_new_contact(wd, Contact(first_name='',
+        self.login(username="admin", password="secret")
+        self.create_new_contact(Contact(first_name='',
                                             last_name='',
                                             company='',
                                             address='',
                                             mobile_phone='',
                                             email='',
                                             notes=''))
-        self.logout(wd)
+        self.logout()
     
     def tearDown(self):
         self.wd.quit()
