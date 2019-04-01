@@ -45,7 +45,7 @@ class ContactHelper:
         self.fill_contact_form(contact)
         # submit contact creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
-        self.group_cache = None
+        self.contact_cache = None
 
     def delete_first_contact(self):
         wd = self.app.wd
