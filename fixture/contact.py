@@ -58,7 +58,7 @@ class ContactHelper:
         # submit contact deleting
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
-        self.group_cache = None
+        self.contact_cache = None
 
     def modify_first_contact(self, contact):
         wd = self.app.wd
@@ -68,7 +68,7 @@ class ContactHelper:
         wd = self.app.wd
         self.open_home_page()
         self.select_contact_by_index(index)
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_element_by_xpath("//tr[%s]//td[8]" % str(index+2)).click()
         self.fill_contact_form(contact)
         # submit contact updating
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
