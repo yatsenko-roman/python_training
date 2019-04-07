@@ -119,11 +119,11 @@ class ContactHelper:
         lastname = wd.find_element_by_name('lastname').get_attribute('value')
         id = wd.find_element_by_name('id').get_attribute('value')
         homephone = wd.find_element_by_name('home').get_attribute('value')
-        workphone = wd.find_element_by_name('work').get_attribute('value')
         mobilephone = wd.find_element_by_name('mobile').get_attribute('value')
+        workphone = wd.find_element_by_name('work').get_attribute('value')
         secondaryphone = wd.find_element_by_name('phone2').get_attribute('value')
-        return Contact(first_name=firstname, last_name=lastname, id=id, homephone=homephone, workphone=workphone,
-                       mobilephone=mobilephone, secondaryphone=secondaryphone)
+        return Contact(first_name=firstname, last_name=lastname, id=id, homephone=homephone, mobilephone=mobilephone,
+                       workphone=workphone, secondaryphone=secondaryphone)
 
     def get_contacts_from_view_page(self, index):
         wd = self.app.wd
